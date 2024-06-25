@@ -1,0 +1,50 @@
+{% extends 'usuarios/base.html' %}
+{% block conteudo %}
+
+<form action="{% url 'listagem_usuarios' %}" method="post">
+    {% csrf_token %}
+
+
+    <div class ="painel" style="text-align: center;" >
+        
+        <h1>Cadastro de Usuários</h1>
+        <br><br>
+        <input name="nome" class="form-control-sm" type="text" placeholder="Nome">
+        <br><br>
+        <input name="idade" class="form-control-sm" type="number" placeholder="Idade">
+        <br><br>
+        <input id="telefone" name="telefone" class="form-control-sm" type="tel" placeholder="Telefone">
+        <br><br>
+        <button class="form-control-sm">Cadastrar</button>
+    </div>
+
+</form>
+
+<script>
+    const telefoneInput = document.getElementById('telefone');
+
+    telefoneInput.addEventListener('input', function(event) {
+        let value = telefoneInput.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+        let formattedValue = '';
+
+        if (value.length > 0) {
+            formattedValue = '(';
+            if (value.length >= 2) {
+                formattedValue += `${value.slice(0, 2)}) `;
+            }else {
+                formattedValue += `${value.slice(0, 2)} `;
+            }
+            if (value.length >= 7) {
+                formattedValue += `${value.slice(2, 7)}-${value.slice(7, 11)} `;
+            } 
+            else if (value.length > 2) {
+                formattedValue += `${value.slice(2)} `;
+            }
+        }
+
+        telefoneInput.value = formattedValue;
+    });
+</script>
+
+
+{% endblock %}
